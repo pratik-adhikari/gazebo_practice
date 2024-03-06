@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<robot>
+    <!-- Paste here -->
+
+    <gazebo>
+        <plugin filename="libgazebo_ros_diff_drive.so" name="differential_drive_controller">
+            <alwaysOn>true</alwaysOn>
+            <!-- Set the update rate in Hz -->
+            <updateRate>20.0</updateRate>
+
+            <!-- Name of the left joint -->
+            <leftJoint>left_wheel_joint</leftJoint>
+
+            <!-- Name of the right joint -->
+            <rightJoint>right_wheel_joint</rightJoint>
+
+            <!-- The distance from the center of one wheel to the other, in meters -->
+            <wheelSeparation>0.4</wheelSeparation>
+
+            <!-- Diameter of the wheels, in meters -->
+            <wheelDiameter>0.05</wheelDiameter>
+
+            <!-- Wheel acceleration, in rad/s^2 -->
+            <wheelAcceleration>1.0</wheelAcceleration>
+
+            <!-- Maximum torque which the wheels can produce, in Nm -->
+            <wheelTorque>20</wheelTorque>
+
+            <!-- Topic to receive geometry_msgs/Twist message commands -->
+            <commandTopic>/cmd_vel</commandTopic>
+
+            <!-- Topic to publish nav_msgs/Odometry messages -->
+            <odometryTopic>odom</odometryTopic>
+
+            <!-- Odometry frame -->
+            <odometryFrame>odom</odometryFrame>
+
+            <!-- Robot frame to calculate odometry from -->
+            <robotBaseFrame>base_link</robotBaseFrame>
+
+            <!-- Set to true to publish transforms for the wheel links -->
+            <publishWheelTF>true</publishWheelTF>
+
+            <!-- Set to true to publish transforms for the odometry -->
+            <!-- <publishOdom>true</publishOdom> -->
+
+            <!-- Set to true to publish sensor_msgs/JointState on /joint_states for the wheel joints -->
+            <!-- <publishWheelJointState>true</publishWheelJointState> -->
+
+            <!-- Set to true to swap right and left wheels -->
+            <!-- <legacyMode>false</legacyMode> -->
+
+            <!-- Set the debug level -->
+            <rosDebugLevel>debug</rosDebugLevel>
+
+            <!-- Publish odometry transforms -->
+            <!-- <publishOdomTF>true</publishOdomTF> -->
+
+            <!-- Specify the odometry source -->
+            <!-- <odometrySource>1</odometrySource> -->
+        </plugin>
+    </gazebo>
+
+
+    <gazebo reference="link_laser_scan">
+        <sensor type="ray" name="head_hokuyo_sensor">
+            <pose>0 0 0 0 0 0</pose>
+            <visualize>true</visualize>
+            <update_rate>20</update_rate>
+            <ray>
+                <scan>
+                    <horizontal>
+                        <samples>720</samples>
+                        <resolution>1</resolution>
+                        <min_angle>-1.570796</min_angle>
+                        <max_angle>1.570796</max_angle>
+                    </horizontal>
+                </scan>
+                <range>
+                    <min>0.20</min>
+                    <max>10.0</max>
+                    <resolution>0.01</resolution>
+                </range>
+                <noise>
+                    <type>gaussian</type>
+                    <mean>0.0</mean>
+                    <stddev>0.01</stddev>
+                </noise>
+            </ray>
+            <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_laser.so">
+                <topicName>/scan</topicName>
+                <frameName>sensor_laser</frameName>
+            </plugin>
+        </sensor>
+    </gazebo>
+</robot>

@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 
-<robot name="simple_cylinder_robot">
+<robot name="my_rb1_robot">
 
+<!-- Material Definitions -->
   <material name="black">
     <color rgba="0 0 0 1"/>
   </material>
@@ -163,5 +164,8 @@
     <child link="link_laser_scan"/>
     <origin xyz="0.25 0 0.075" rpy="3.14159 0 0"/> <!--laser upside down by pi radians-->
   </joint>
+
+
+
 
 </robot>
