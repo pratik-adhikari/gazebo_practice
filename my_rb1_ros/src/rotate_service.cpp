@@ -63,8 +63,7 @@ int main(int argc, char **argv) {
 
   // Subscribe to odom
   ros::Subscriber sub = n.subscribe("/odom", 100, odomCallback);
-  ros::Publisher cmd_vel_pub =
-      n.advertise<geometry_msgs::Twist>("cmd_vel", 100);
+  cmd_vel_pub = n.advertise<geometry_msgs::Twist>("cmd_vel", 100);
 
   ros::ServiceServer service = n.advertiseService("/rotate_robot", rotate);
 
