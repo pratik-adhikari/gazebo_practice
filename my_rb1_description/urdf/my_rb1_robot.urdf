@@ -16,8 +16,27 @@
   </material>
   
   <!-- Dummy link for KDL Warning correction-->
-  <link name="link_chassis">
-
+  <link name="base_footprint">
+    <link name="base_footprint">
+    <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.001"/> 
+        <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/> 
+    </inertial>
+    <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+        <box size="0.01 0.01 0.01"/> 
+        </geometry>
+        <material name="grey"/> 
+    </visual>
+    <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+        <box size="0.01 0.01 0.01"/> 
+        </geometry>
+    </collision>
+    </link>
   </link>
 
   <!-- Base link -->
@@ -125,14 +144,14 @@
   <!-- Joint definitions -->
   <joint name="chassis_joint" type="fixed">
     <origin xyz="0 0 0" rpy="0 0 0"/>
-    <parent link="link_chassis"/>
+    <parent link="base_footprint"/>
     <child link="base_link"/>
   </joint>
 
   <joint name="left_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="left_wheel"/>
-    <origin xyz="0.0 -0.2 -0.15" rpy="0 0 0"/>
+    <origin xyz="0.0 0.2 -0.15" rpy="0 0 0"/>
     <axis xyz="0 1 0"/>
     <limit effort="0" velocity="0"/>
   </joint>
@@ -140,7 +159,7 @@
   <joint name="right_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="right_wheel"/>
-    <origin xyz="0.0 0.2 -0.15" rpy="0 0 0"/>
+    <origin xyz="0.0 -0.2 -0.15" rpy="0 0 0"/>
     <axis xyz="0 1 0"/>
     <limit effort="0" velocity="0"/>
   </joint>
@@ -148,13 +167,13 @@
   <joint name="front_caster_joint" type="fixed">
     <parent link="base_link"/>
     <child link="front_caster"/>
-    <origin xyz="-0.1 0 -0.15" rpy="0 0 0"/>
+    <origin xyz="0.1 0 -0.15" rpy="0 0 0"/>
   </joint>
 
   <joint name="back_caster_joint" type="fixed">
     <parent link="base_link"/>
     <child link="back_caster"/>
-    <origin xyz="0.1 0 -0.15" rpy="0 0 0"/>
+    <origin xyz="-0.1 0 -0.15" rpy="0 0 0"/>
   </joint>
 
 
