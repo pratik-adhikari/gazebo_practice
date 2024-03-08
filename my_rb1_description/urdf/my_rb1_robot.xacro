@@ -37,7 +37,7 @@
   </link>
 
   <joint name="chassis_joint" type="fixed">
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="0 0 0.15" rpy="0 0 0"/>
     <parent link="base_footprint"/>
     <child link="base_link"/>
   </joint>
@@ -151,14 +151,14 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <sphere radius="0.0125"/>
+        <sphere radius="0.025"/>
       </geometry>
       <material name="grey"/>
     </visual>
     <collision>
         <origin rpy="0 0 0" xyz="0 0 0" />
         <geometry>
-            <sphere radius="0.0125"/>
+            <sphere radius="0.025"/>
         </geometry>
     </collision>
   </link>
@@ -177,14 +177,14 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <sphere radius="0.0125"/>
+        <sphere radius="0.0025"/>
       </geometry>
       <material name="grey"/>
     </visual>
     <collision>
         <origin rpy="0 0 0" xyz="0 0 0" />
         <geometry>
-            <sphere radius="0.0125"/>
+            <sphere radius="0.025"/>
         </geometry>
     </collision>
   </link>
