@@ -1,9 +1,6 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 
-<robot name="robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
-
-  <!-- <xacro:include filename="$(find robot_description)/urdf/robot.gazebo" /> -->
-
+<robot name="robot">
 <!-- Material Definitions -->
   <material name="black">
     <color rgba="0 0 0 1"/>
@@ -20,12 +17,6 @@
 
   <!-- Dummy link for KDL Warning correction-->
   <link name="base_footprint">
-    <link name="base_footprint">
-    <inertial>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <mass value="0.001"/> 
-        <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/> 
-    </inertial>
     <visual>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
@@ -33,7 +24,6 @@
         </geometry>
         <material name="grey"/> 
     </visual>
-    </link>
   </link>
 
   <joint name="chassis_joint" type="fixed">
@@ -77,8 +67,8 @@
     <child link="left_wheel"/>
     <origin xyz="0.0 0.2 -0.15" rpy="0 0 0"/>
     <axis xyz="0 1 0"/>
-    <limit effort="10000" velocity="1000" />
-    <joint_properties damping="1.0" friction="1.0" />
+    <limit effort="100" velocity="100" />
+    <joint_properties friction="1.0" />
   </joint>
 
   <link name="left_wheel">
@@ -88,15 +78,15 @@
         <inertia ixx="0.002526666666667" ixy="0" ixz="0" iyy="0.002526666666667" iyz="0" izz="0.005"/>
     </inertial>
     <collision>
-        <origin rpy="1.5708 0 0" xyz="0 0 0" />
+        <origin rpy="1.57079632679 0 0" xyz="0 0 0" />
         <geometry>
-            <cylinder length="0.01" radius="0.025"/>
+            <cylinder length="0.04" radius="0.025"/>
         </geometry>
     </collision>
     <visual>
       <origin xyz="0 0 0" rpy="1.5708 0 0"/>
       <geometry>
-        <cylinder radius="0.025" length="0.01"/>
+        <cylinder radius="0.025" length="0.04"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -111,8 +101,8 @@
     <child link="right_wheel"/>
     <origin xyz="0.0 -0.2 -0.15" rpy="0 0 0"/>
     <axis xyz="0 1 0"/>
-    <limit effort="10000" velocity="1000" />
-    <joint_properties damping="1.0" friction="1.0" />
+    <limit effort="100" velocity="100" />
+    <joint_properties friction="1.0" />
   </joint>
 
   <link name="right_wheel">
@@ -122,15 +112,15 @@
         <inertia ixx="0.002526666666667" ixy="0" ixz="0" iyy="0.002526666666667" iyz="0" izz="0.005"/>
     </inertial>
     <collision>
-        <origin rpy="1.5708 0 0" xyz="0 0 0" />
+        <origin rpy="1.57079632679 0 0" xyz="0 0 0" />
         <geometry>
-            <cylinder length="0.01" radius="0.025"/>
+            <cylinder length="0.04" radius="0.025"/>
         </geometry>
     </collision>
     <visual>
       <origin xyz="0 0 0" rpy="1.5708 0 0"/>
       <geometry>
-        <cylinder radius="0.025" length="0.01"/>
+        <cylinder radius="0.025" length="0.04"/>
       </geometry>
       <material name="black"/>
     </visual>
@@ -139,58 +129,98 @@
         <material>Gazebo/Red</material>
     </gazebo>
 
+  <gazebo reference="right_wheel">
+    <material>Gazebo/Red</material>
+    <surface>
+        <friction>
+        <ode>
+            <mu>1.5</mu> 
+            <mu2>1.5</mu2>
+        </ode>
+        </friction>
+    </surface>
+  </gazebo>
+  <gazebo reference="left_wheel">
+    <material>Gazebo/Red</material>
+    <surface>
+        <friction>
+        <ode>
+            <mu>1.5</mu> 
+            <mu2>1.5</mu2>
+        </ode>
+        </friction>
+    </surface>
+  </gazebo>
+
   <!-- caster wheel -->
-  <joint name="front_caster_joint" type="fixed">
-    <parent link="base_link"/>
-    <child link="front_caster"/>
-    <origin xyz="0.1 0 -0.15" rpy="0 0 0"/>
-    <joint_properties friction="0.0" />
-  </joint>
-
-  <link name="front_caster">
+<link name="front_castor">
+    <inertial>
+        <mass value="0.1" />
+        <inertia ixx="0.0001" iyy="0.0001" izz="0.0001" ixy="0.0" ixz="0.0" iyz="0.0"/>
+    </inertial>
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <sphere radius="0.025"/>
-      </geometry>
-      <material name="grey"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+            <sphere radius="0.025"/>
+        </geometry>
+        <material name="black"/>
     </visual>
     <collision>
-        <origin rpy="0 0 0" xyz="0 0 0" />
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
             <sphere radius="0.025"/>
         </geometry>
     </collision>
-  </link>
-    <gazebo reference="front_caster">
-        <material>Gazebo/White</material>
-    </gazebo>
+</link>
 
-  <joint name="back_caster_joint" type="fixed">
+<!-- Front caster wheel joint -->
+<joint name="front_castor_joint" type="fixed">
+    <origin xyz="-0.1 0.0 -0.15" rpy="0 0 0"/>
     <parent link="base_link"/>
-    <child link="back_caster"/>
-    <origin xyz="-0.1 0 -0.15" rpy="0 0 0"/>
-    <joint_properties friction="0.0" />
-  </joint>
+    <child link="front_castor"/>
+</joint>
 
-  <link name="back_caster">
+<!-- Gazebo plugin for front caster wheel to set friction to zero -->
+<gazebo reference="front_castor">
+    <material>Gazebo/White</material>
+    <mu1>0.0</mu1> <!-- Friction parameter -->
+    <mu2>0.0</mu2> <!-- Friction parameter -->
+</gazebo>
+
+<!-- Back caster wheel link -->
+<link name="back_castor">
+    <inertial>
+        <mass value="0.1" />
+        <inertia ixx="0.0001" iyy="0.0001" izz="0.0001" ixy="0.0" ixz="0.0" iyz="0.0"/>
+    </inertial>
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <sphere radius="0.0025"/>
-      </geometry>
-      <material name="grey"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+            <sphere radius="0.025"/>
+        </geometry>
+        <material name="black"/>
     </visual>
     <collision>
-        <origin rpy="0 0 0" xyz="0 0 0" />
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
             <sphere radius="0.025"/>
         </geometry>
     </collision>
-  </link>
-    <gazebo reference="back_caster">
-        <material>Gazebo/White</material>
-    </gazebo>
+</link>
+
+<!-- Back caster wheel joint -->
+<joint name="back_castor_joint" type="fixed">
+    <origin xyz="0.1 0.0 -0.15" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="back_castor"/>
+</joint>
+
+<!-- Gazebo plugin for back caster wheel to set friction to zero -->
+<gazebo reference="back_castor">
+    <material>Gazebo/White</material>
+    <mu1>0.0</mu1> <!-- Friction parameter -->
+    <mu2>0.0</mu2> <!-- Friction parameter -->
+</gazebo>
 
 
     <gazebo>
