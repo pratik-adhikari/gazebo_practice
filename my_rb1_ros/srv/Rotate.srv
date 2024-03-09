@@ -1,3 +1,3 @@
-int32 degrees
+float64 degrees
 ---
 string result
